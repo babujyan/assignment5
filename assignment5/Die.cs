@@ -31,7 +31,7 @@ namespace assignment5
         /// <summary>
         /// How many times Die should be rolled.
         /// </summary>
-        public int rollingDie;
+        public int numberOfRolls;
 
         /// <summary>
         /// The rundom number generator
@@ -39,9 +39,9 @@ namespace assignment5
         private readonly Random random;
 
 
-        public Die(int rollingDie)
+        public Die(int numberOfRolls)
         {
-            this.rollingDie = rollingDie;
+            this.numberOfRolls = numberOfRolls;
             this.random = new Random(100);
 
         }
@@ -51,13 +51,13 @@ namespace assignment5
             int previousNumber = 0;
             List<int> randomNumbers = new List<int>(); 
 
-            for (int i = 0; i < this.rollingDie; i++)
+            for (int i = 0; i < this.numberOfRolls; i++)
             {
                 
                 int nextNumber = this.random.Next(1, 7);
                 randomNumbers.Add(nextNumber);
                 randomNumbers.Last();
-                Console.WriteLine(nextNumber);
+                //Console.WriteLine(nextNumber);
 
                 if (randomNumbers.Count() == 5)
                 {
