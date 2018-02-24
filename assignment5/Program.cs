@@ -15,6 +15,7 @@ namespace assignment5
             Die a = new Die(1000);
             a.twoSixesInARow += TwoSixesInARow.F;
             a.endOfProgram += TwoSixesInARow.PrintNumber;
+            a.sumIsGreater += SumIsGreater.S;
             a.Run();
         }
     }
