@@ -8,9 +8,13 @@ namespace assignment5
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            Die a = new Die(50);
+
+            Die a = new Die(1000);
+            a.twoSixesInARow += TwoSixesInARow.F;
+            a.endOfProgram += TwoSixesInARow.PrintNumber;
             a.Run();
         }
     }

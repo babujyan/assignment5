@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace assignment5
@@ -12,10 +13,16 @@ namespace assignment5
         /// The delegate type for handling event.
         /// </summary>
         public delegate void TwoSixesInARow();
+
         /// <summary>
         /// Event
         /// </summary>
         public TwoSixesInARow twoSixesInARow;
+
+        public delegate void EndOfProgram();
+
+        public EndOfProgram endOfProgram;
+
 
         /// <summary>
         /// How many times Die should be rolled.
@@ -31,20 +38,32 @@ namespace assignment5
         public Die(int rollingDie)
         {
             this.rollingDie = rollingDie;
-            this.random = new Random(1);
+            this.random = new Random(100);
+
         }
 
         public void Run()
         {
+            int previousNumber = 0;
             for (int i = 0; i < this.rollingDie; i++)
             {
                 int nextNumber = this.random.Next(1, 7);
+
                 Console.WriteLine(nextNumber);
-                if (this.twoSixesInARow != null)
+                if (nextNumber == previousNumber && nextNumber == 6)
                 {
-                    this.twoSixesInARow.Invoke();
+                    if (this.twoSixesInARow != null)
+                    {
+                        this.twoSixesInARow.Invoke();
+                    }
                 }
+                previousNumber = nextNumber;
             }
-        }
+
+            if (this.endOfProgram != null)
+            {
+                endOfProgram.Invoke();
+            }
+        } 
     }
 }
