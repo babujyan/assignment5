@@ -10,6 +10,8 @@ namespace assignment5
     {
         static void Main(string[] args)
         {
+            Die a = new Die(50);
+            a.Run();
         }
     }
 }
