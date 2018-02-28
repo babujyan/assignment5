@@ -11,11 +11,15 @@ namespace assignment5
 
         static void Main(string[] args)
         {
+            
+            Die a = new Die(50);
 
-            Die a = new Die(1000);
-            a.twoSixesInARow += TwoSixesInARow.F;
-            a.endOfProgram += TwoSixesInARow.PrintNumber;
-            a.sumIsGreater += SumIsGreater.S;
+            //Subsribing to the events.
+            a.TwoSixesInARow += TwoSixesInARow.EvantHandler;
+            a.EndOfProgram += TwoSixesInARow.PrintNumber;
+            a.SumIsGreater += SumIsGreater.EvantHandler;
+
+            //Run the simulation.
             a.Run();
         }
     }

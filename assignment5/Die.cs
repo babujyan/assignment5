@@ -12,20 +12,28 @@ namespace assignment5
         /// <summary>
         /// The delegate type for handling event.
         /// </summary>
-        public delegate void TwoSixesInARow();
+        public delegate void VoidToVoid();
 
         /// <summary>
-        /// Event
+        /// Event-Two sixes in a row.
         /// </summary>
-        public TwoSixesInARow twoSixesInARow;
+        public event VoidToVoid TwoSixesInARow;
 
-        public delegate void EndOfProgram();
+        /// <summary>
+        /// Event - End of program.
+        /// </summary>
+        public event VoidToVoid EndOfProgram;
 
-        public EndOfProgram endOfProgram;
+        /// <summary>
+        /// The delegate type for handling event.
+        /// </summary>
+        /// <param name="randomNumbers">Rolled dice.</param>
+        public delegate void LinstIntToVoid(List<int> randomNumbers);
 
-        public delegate void SumIsGreater(List<int> randomNumbers);
-
-        public SumIsGreater sumIsGreater;
+        /// <summary>
+        /// Event -the sum is greater than or equal to 20.
+        /// </summary>
+        public event LinstIntToVoid SumIsGreater;
 
 
         /// <summary>
@@ -38,7 +46,10 @@ namespace assignment5
         /// </summary>
         private readonly Random random;
 
-
+        /// <summary>
+        /// Seting how many times die gonna be rolled.
+        /// </summary>
+        /// <param name="numberOfRolls"> Number of rolls.</param>
         public Die(int numberOfRolls)
         {
             this.numberOfRolls = numberOfRolls;
@@ -46,47 +57,58 @@ namespace assignment5
 
         }
 
+        /// <summary>
+        /// Simulation of rolling dice.
+        /// </summary>
         public void Run()
         {
+            //Init some local vars.
             int previousNumber = 0;
             List<int> randomNumbers = new List<int>(); 
 
+            //
             for (int i = 0; i < this.numberOfRolls; i++)
             {
-                
+                //gets random number from 1 to 6.
                 int nextNumber = this.random.Next(1, 7);
+                
+                //Adds to list.
                 randomNumbers.Add(nextNumber);
-                randomNumbers.Last();
-                //Console.WriteLine(nextNumber);
 
+                //If there are two sixes in a row call the event.
+                if (nextNumber == previousNumber && nextNumber == 6)
+                {
+                    if (this.TwoSixesInARow != null)
+                    {
+                        this.TwoSixesInARow.Invoke();
+                    }
+                }
+
+                //If ther are 5 nubers in a list count sum.
                 if (randomNumbers.Count() == 5)
                 {
                     if(randomNumbers.Sum() > 19)
                     {
-                        if (this.sumIsGreater != null)
-                        {
-                            this.sumIsGreater.Invoke(randomNumbers);
+                        //If the sum is greater than or equal to 20 call the event.
+                        if (this.SumIsGreater != null)
+                        {        
+                            this.SumIsGreater.Invoke(randomNumbers);
                         }
                     }
-                    randomNumbers.RemoveAt(0);
+                    
+                    //Clear the list.
+                    randomNumbers.Clear();
                 }
 
                 
-                if (nextNumber == previousNumber && nextNumber == 6)
-                {
-                    if (this.twoSixesInARow != null)
-                    {
-                        this.twoSixesInARow.Invoke();
-                    }
-                }
-
-               
+                //Make mext nuber to previous number.            
                 previousNumber = nextNumber;
             }
-            
-            if (this.endOfProgram != null)
+
+            //When all dices have rolled call end of program event.
+            if (this.EndOfProgram != null)
             {
-                endOfProgram.Invoke();
+                this.EndOfProgram.Invoke();
             }
         } 
     }
